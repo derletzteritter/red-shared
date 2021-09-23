@@ -1,6 +1,5 @@
 import { db } from '../database/db';
-// FIXME: Fix these types
-
+import { CharacterBodyProps } from "../../shared/types";
 
 export class _CharacterDB {
   async fetchCharacters(playerId: number): Promise<any[]> {
@@ -10,7 +9,7 @@ export class _CharacterDB {
     return <any[]>results;
   }
 
-  async fetchBody(charid: number): Promise<any> {
+  async fetchBody(charid: number): Promise<CharacterBodyProps> {
     const query = `SELECT body FROM characters WHERE id = ?`;
     const [results] = await db.query(query, [charid]);
     const result = <any[]>results;
@@ -25,7 +24,7 @@ export class _CharacterDB {
 
     return result[0].clothes;
   }
-  
+
   async updateClothing(charid: number, clothing: any): Promise<void> {
     const query = `UPDATE characters SET clothes = ? WHERE id = ?`
     await db.query(query, [clothing, charid]);
